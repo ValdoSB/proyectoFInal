@@ -7,7 +7,7 @@
     <title>Registro de Libro</title>
 </head>
 <body>
-    <!--<div class="nav">
+    <!-- <div class="nav">
         <a class="navAnchor" href="index.html">Sobre mí</a>
         <a class="navAnchor" href="formulario.html">Formulario</a>
     </div> -->
@@ -15,7 +15,7 @@
         <h1>Nuevo Libro</h1>
 
         <h2>Ingrese los datos necesarios:</h2>
-        <form action:="" method="post" id="createBookForm">
+        <form action:="{{route('libros.store')}}" method="post">
             
             @csrf
             <fieldset>

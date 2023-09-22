@@ -12,7 +12,8 @@ class LibrosController extends Controller
      */
     public function index()
     {
-        //
+        //return view('libros/indexLibro');
+        return view('libros/createLibro');
     }
 
     /**
@@ -28,13 +29,18 @@ class LibrosController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+        ]);
+
         $libro = new Libros();
-        $libro->bookISBNCreateForm = $request->bookISBNCreateForm;
-        $libro->bookNameCreateForm = $request->bookNameCreateForm;
-        $libro->authorNameCreateForm = $request->authorNameCreateForm;
-        $libro->editorialNameCreateForm = $request->editorialNameCreateForm;
-        $libro->booksQuantityCreateForm = $request->booksQuantityCreateForm;
+        $libro->ISBN = $request->bookISBNCreateForm;
+        $libro->nombre = $request->bookNameCreateForm;
+        $libro->autor = $request->authorNameCreateForm;
+        $libro->editorial = $request->editorialNameCreateForm;
+        $libro->cantidad = $request->booksQuantityCreateForm;
         $libro->save();
+
+        return redirect()->route('libros.index');
     }
 
     /**
