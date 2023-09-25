@@ -29,8 +29,7 @@ class LibrosController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-        ]);
+        //$request->validate([]);
 
         $libro = new Libros();
         $libro->ISBN = $request->bookISBNCreateForm;
@@ -48,7 +47,7 @@ class LibrosController extends Controller
      */
     public function show(Libros $libros)
     {
-        //
+        return view('libros.showLibro');
     }
 
     /**

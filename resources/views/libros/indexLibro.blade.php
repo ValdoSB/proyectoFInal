@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,13 @@
 <body>
     <h1>Indice</h1>
     <ul>
-        <li><a href="{{route('libros.create')}}">Crear</a></li>
+        @foreach($libros as $libro)
+        <li>
+            <a href="{{route('libros.show', $libro)}}">
+                {{ $libro->nombre }}
+            </a>
+        </li>
+        @endforeach
     </ul>
 </body>
 </html>

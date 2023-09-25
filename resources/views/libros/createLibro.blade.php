@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +15,7 @@
         <h1>Nuevo Libro</h1>
 
         <h2>Ingrese los datos necesarios:</h2>
-        <form action:="{{route('libros.store')}}" method="post">
+        <form action="{{route('libros.store')}}" method="post">
             
             @csrf
             <fieldset>

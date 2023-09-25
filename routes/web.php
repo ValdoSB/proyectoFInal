@@ -20,4 +20,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Route::get('/libros/pdf', [LibrosController::class, ''])->name('libros.pdf');
 Route::resource('libros', LibrosController::class);
