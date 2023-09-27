@@ -13,6 +13,15 @@
             <a href="{{route('libros.show', $libro)}}">
                 {{ $libro->nombre }}
             </a>
+            |
+            <a href="{{route('libros.edit', $libro)}}">
+                Editar
+            </a>
+            <form action="{{route('libros.destroy', $libro)}}" method="post">
+                @csrf
+                @method ('delete')
+                <input type="submit" value="borrar">
+            </form>
         </li>
         @endforeach
     </ul>

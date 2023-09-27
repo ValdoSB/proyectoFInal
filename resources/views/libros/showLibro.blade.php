@@ -8,5 +8,6 @@
 </head>
 <body>
     <h2>Nombre del libro: {{ $libro->nombre }}</h2>
+    <h2>ISBN del libro: {{ $libro->ISBN }}</h2>
 </body>
 </html>

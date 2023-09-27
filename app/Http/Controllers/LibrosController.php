@@ -12,8 +12,9 @@ class LibrosController extends Controller
      */
     public function index()
     {
-        //return view('libros/indexLibro');
-        return view('libros/createLibro');
+        $libros = Libros::all();
+
+        return view('libros/indexLibro', compact('libros'));
     }
 
     /**
@@ -45,32 +46,41 @@ class LibrosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Libros $libros)
+    public function show(Libros $libro)
     {
-        return view('libros.showLibro');
+        return view('libros.showLibro', compact('libro'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Libros $libros)
+    public function edit(Libros $libro)
     {
-        //
+        return view('libros.editLibro', compact('libro'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Libros $libros)
+    public function update(Request $request, Libros $libro)
     {
-        //
+        $libro->ISBN = $request->bookISBNCreateForm;
+        $libro->nombre = $request->bookNameCreateForm;
+        $libro->autor = $request->authorNameCreateForm;
+        $libro->editorial = $request->editorialNameCreateForm;
+        $libro->cantidad = $request->booksQuantityCreateForm;
+        $libro->save();
+
+        return redirect()->route('libros.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Libros $libros)
+    public function destroy(Libros $libro)
     {
-        //
+        $libro->delete();
+        
+        return redirect()->route('libros.index');
     }
 }
