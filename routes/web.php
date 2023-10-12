@@ -1,7 +1,10 @@
 <?php
 
-use App\Models\Libro;
 use App\Http\Controllers\LibrosController;
+use App\Http\Controllers\ClientesController;
+use App\Models\Libro;
+use App\Models\Clientes;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +25,4 @@ Route::get('/', function () {
 
 //Route::get('/libros/pdf', [LibrosController::class, ''])->name('libros.pdf');
 Route::resource('libros', LibrosController::class);
+Route::resource('clientes', ClientesController::class);
