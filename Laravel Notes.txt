@@ -1,0 +1,210 @@
+composer create-project laravel/laravel ejemploLaravel 
+instalar en una carpeta con el nombre con los paquetes de laravel
+
+----------- Shympony framework --------------
+
+en caso de trabarse 
+		composer install
+--Entrar en la carpeta
+	cd ejemploLaravel
+Encender servidor de laravel
+ php artisan serve
+
+http://127.0.0.1:8000 ----- IP artisan
+
+Despues de crear, apagar el servidor de laragon, encenderlo de nuevo, dar permiso admin, en navegador "nombrearchivo.test"
+Ctrl+T crea una nueva pestaña de terminal
+
+
+Las credenciales de la DB se guardan en el archivo .env
+Mantener en .env el APP_ENV=local es unicamente mientras aun no mandamos la aplicacion a produccion, mientras que APP_DEBUG=true mostrara el trace route en caso de detectar
+un error.
+ ------------------------------ GIT COMMIT/PUSH --------------------------------------------
+git add .
+
+git commit -m "Store y Show de Usuarios"
+
+git remote add origin https://github.com/ValdoSB/proyectoFinal.git
+
+git push -u origin HEAD:Clientes
+
+--------------------------------------------------------------------------------------------
+git clone https://github.com/KarmaCameleon02/pruebaLaravel.git
+
+entrar a la carpeta clonada
+composer install
+cambia env.example a .env
+cp .env.example .env
+
+
+caja de comandos  php artisan key:generate
+
+php artisan "comando" --help [MUESTRA TODAS LAS CONFIGURACIONES POSIBLES DE X COMANDO]
+
+Captura de pantalla de que la landpage de laravel jala
+code . abre vcode
+
+
+----------------------------------------07/09/2023
+
+dd(); EN laravel es para el dump
+
+Extension VSC 
+	PHP intelephense
+	PHP namespace resolver 
+
+Reques $request ------> Crea una instancia de request 
+		$request->all RECUPERA TODO
+		$request->variable RECUPERA LA VARIABLE ESPECIFICA
+ en /contacto
+	{tipo} indica un espacio para insertar una variable
+
+variable? indica que puede esta presente o no en la sintaxis, pero es necesario asignarle un valor default para evitar error de muy pocos argumentos
+
+{{}} de blade sanitiza la salida para evitar injecciones en la barra de navegacion
+
+@foreach ----------> util para recuperar informacion de una base de datos 
+
+
+en la consola de laragon con | grep (palabra a buscar)
+
+string--------->250 caracteres
+text->mayor cantidad de caracteres 
+
+
+
+migrate:rollback ----------> ctrl+z para las migraciones
+
+
+------------------------------------------------------- 12/09/2023 ------------------------------------------------------- 
+	CONTROLADORES
+
+php artisan make:controller -Nombre-
+
+
+listado  ---- Index
+form creacion ---- Create
+almacena creacion/guarda ---- store
+detalle/mostrar ---- show
+form editar ---- edit
+actualizar ---- update
+Borrar ---- delete
+
+php artisan make:model (nombre) -mcr  ------------crea un controlador con las funciones de Crud
+
+php artisan route:list ------ manejo
+
+--------------------------------------------------21/09/23-------------------------------------------------------------------
+
+
+
+git clone https://github.com/KarmaCameleon02/pruebaLaravel.git
+
+entrar a la carpeta clonada
+composer install
+cambia env.example a .env
+cp .env.example .env
+
+
+caja de comandos  laragon
+php artisan key:generate
+cambiar puerto de .env 33061
+
+---------------------------------------------28/09/23
+Livewire actualiza partes de una pagina de manera dinamica sin recargar toda la pagina
+Jetstream sirve para hacer uso de la tabla users del proyecto
+
+Instalar JetStream
+composer require laravel/jetstream
+
+Instalarlos 
+php artisan jetstream:install livewire
+PErmite añadir roles y equipos en un sistema
+
+php artisan jetstream:install livewire --teams
+
+Crear en resources una carpeta con el nombre de la plantilla y meter en ella todos los assets de nuestra plantilla
+
+
+npm run build ----> corre los assets que tengamos en la carpeta de la plantilla
+npm run dev ------->se queda corriendo para actualizar en el momento las modificaciones de nuestra pagina desde codigo (Como la extension de VS Code)
+Tambien se pueden meter las plantillas en public como forma tradicional
+Buscar Template para acomodarlo siguiente clase y entregar el proyecto
+
+Layout (checar componentes de Laravel ---- php artisnan make:component nameComponent --view)
+
+al una tag darle una variable {{$SLOT}}, podemos ingresar datos al encerrarlo entre llaves del componente
+<x-componente>
+	Informacion que sera insertada en el SLOT
+</x-componente>
+
+Los componentes son utiles para usar desde cualquier punto de el codigo, al definirlo desde un componente una vez.
+
+-------------------------------------------------- 10/10/2023 -------------------------------------------------- 
+
+php artisan make:model  Nombre_modelo -mcr
+en el modelo constructor:
+ $table->string('identificador');
+ $table->string('');
+----FORANEA---
+$table->unsignedBigInteger('cliente_id');
+$table->foreign('cliente_id')->references('id')->on('clientes');
+ 	
+	O
+
+$table->foreignId('cliente_id')->constrained();
+
+hacer
+php artisan migrate:refresh
+
+(Show create table requerimientos;)
+
+
+
+-------- EN LOS MODELOS DE USUARIO Y NOMBRE_MODELO -------- 
+
+//Modelo Usuario constructor
+public function nombremuchos(){
+	return $this->hasMany(NombreModeloMuchos::class);
+}
+
+//Modelo NombreModelo_Muchos constructor
+
+public function usuario(){
+	return $this->belongsTo(Usuario::class);
+}
+
+
+ver en el Web.php añadir el controlador que se utilizara con la variable del modelo
+Route::resource('muchos', MuchosController::class);
+
+usar el @foreach(){
+}
+para mostrar la seleccion posible de todos los existentes de la tabla principal (en este caso un <select>)
+
+en Create de MuchasController()
+$norma = Normas :: All();
+
+
+
+
+en el store Norma
+	$norma = Norma::find($request->norma_id);
+	$norma = requerimientos()->save($req);
+En modelo Norma
+dentro de public Rqeuerimientos(){
+public $timestamps = false;
+}
+
+En el Show de nuestro modelo principal:
+
+EN un <ul>
+	@foreach($norma->$requerimientos as $r)
+		Valores a traer
+		<li>{{r->identificador}}</li>
+	@endforeach
+	<li>$norma->$requerimientos</li>
+
+
+
+
