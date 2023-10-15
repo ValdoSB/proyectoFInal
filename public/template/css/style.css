@@ -415,8 +415,13 @@ button {
   font-size: 15px;
   letter-spacing: 1px;
   display: inline-block;
-  padding: 15px 30px;
-  border-radius: 4px;
+  padding: 0, 0;
+  border: none;
+  cursor: pointer; 
+  border: 1px solid #3498db; 
+  background-color: transparent; 
+  box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+  color: #000000a8; 
 }
 
 .btn-main, .btn-main-sm {
@@ -2233,7 +2238,9 @@ form textarea {
 .footer-bottom {
   position: relative;
   background: #363839;
-  padding: 25px 0;
+  padding: 45px 0;
+  bottom: 0;
+  width: 100%;
 }
 @media (max-width: 480px) {
   .footer-bottom {
@@ -2243,6 +2250,7 @@ form textarea {
 .footer-bottom .copyright p {
   color: #c7c7c7;
   margin-bottom: 0;
+  margin-top: auto;
 }
 .footer-bottom .social-media-icons {
   margin-right: -20px;
