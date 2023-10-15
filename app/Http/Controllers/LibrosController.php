@@ -30,7 +30,13 @@ class LibrosController extends Controller
      */
     public function store(Request $request)
     {
-        //$request->validate([]);
+        $request->validate([
+            'bookISBNCreateForm' => ['min_digits:10', 'max_digits:13'],
+            'bookNameCreateForm' => ['regex:/^[A-Za-z0-9 .]+$/i', 'min:8'],
+            'authorNameCreateForm' => ['regex:/^[\pL\s\-]+$/u', 'min:8'],
+            'editorialNameCreateForm' => ['regex:/^[A-Za-z0-9 .-]+$/i', 'min:3'],
+            'booksQuantityCreateForm' => ['numeric','min_digits:1', 'max_digits:4'],
+        ]);
 
         $libro = new Libros();
         $libro->ISBN = $request->bookISBNCreateForm;
@@ -64,6 +70,14 @@ class LibrosController extends Controller
      */
     public function update(Request $request, Libros $libro)
     {
+        $request->validate([
+            'bookISBNCreateForm' => ['min_digits:10', 'max_digits:13'],
+            'bookNameCreateForm' => ['regex:/^[A-Za-z0-9 .]+$/i', 'min:8'],
+            'authorNameCreateForm' => ['regex:/^[\pL\s\-]+$/u', 'min:8'],
+            'editorialNameCreateForm' => ['regex:/^[A-Za-z0-9 .-]+$/i', 'min:3'],
+            'booksQuantityCreateForm' => ['numeric','min_digits:1', 'max_digits:4'],
+        ]);
+
         $libro->ISBN = $request->bookISBNCreateForm;
         $libro->nombre = $request->bookNameCreateForm;
         $libro->autor = $request->authorNameCreateForm;
