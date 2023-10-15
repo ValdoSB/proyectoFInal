@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('libros', function (Blueprint $table) {
             $table->id();
-            $table->integer('ISBN');
+            $table->bigInteger('ISBN');
             $table->string('nombre');
             $table->string('autor');
             $table->string('editorial');

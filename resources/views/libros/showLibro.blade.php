@@ -1,4 +1,5 @@
 <x-show-libro-layout>
+	@csrf
     <div class="col-lg-8">
 		<div class="product-details">
 			<h1 class="product-title">{{ $libro->nombre }}</h1>
@@ -11,14 +12,14 @@
 
 			<!-- product slider -->
 			<div class="product-slider">
-				<div class="product-slider-item my-4" data-image="{{asset('images/libros/libroprueba.jpg')}}">
-					<img class="img-fluid w-100" src="{{asset('images/libros/libroprueba.jpg')}}" alt="product-img">
+				<div class="product-slider-item my-4" data-image="{{asset('template/images/libros/libroprueba.jpg')}}">
+					<img class="img-fluid w-100" src="{{asset('template/images/libros/libroprueba.jpg')}}" alt="product-img">
 				</div>
-				<div class="product-slider-item my-4" data-image="{{asset('images/libros/libroprueba2.jpg')}}">
-					<img class="d-block img-fluid w-100" src="{{asset('images/libros/libroprueba2.jpg')}}" alt="Second slide">
+				<div class="product-slider-item my-4" data-image="{{asset('template/images/libros/libroprueba2.jpg')}}">
+					<img class="d-block img-fluid w-100" src="{{asset('template/images/libros/libroprueba2.jpg')}}" alt="Second slide">
 				</div>
-				<div class="product-slider-item my-4" data-image="{{asset('images/libros/libroprueba3.avif')}}">
-					<img class="d-block img-fluid w-100" src="{{asset('images/libros/libroprueba3.avif')}}" alt="Third slide">
+				<div class="product-slider-item my-4" data-image="{{asset('template/images/libros/libroprueba3.avif')}}">
+					<img class="d-block img-fluid w-100" src="{{asset('template/images/libros/libroprueba3.avif')}}" alt="Third slide">
 				</div>
 			</div>
 			<!-- product slider -->

@@ -15,7 +15,7 @@
   <meta name="generator" content="Themefisher Classified Marketplace Template v1.0">
 
   <!-- favicon -->
-  <link href="images/favicon.png" rel="shortcut icon">
+  <link href="{{asset('template/images/icon.ico')}}" rel="shortcut icon">
 
   <!-- 
   Essential stylesheets

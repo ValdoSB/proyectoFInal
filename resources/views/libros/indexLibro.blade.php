@@ -2,7 +2,7 @@
 	@foreach($libros as $libro)
 	<tr>
 		<td class="product-thumb">
-			<img width="80px" height="auto" src="images/libros/libroPrueba.jpg" alt="Aquí va una imagen"></td>
+			<img width="80px" height="auto" src="{{asset('template/images/libros/libroPrueba.jpg')}}" alt="Aquí va una imagen"></td>
 		<td class="product-details">
 			<h3 class="title">{{ $libro->nombre }}</h3>
 			<span class="add-id"><strong>ISBN:</strong>{{ $libro->ISBN }}</span>
@@ -24,8 +24,8 @@
 					</a>
 				</li>
 				<form action="{{route('libros.destroy', $libro)}}" method="post">
-                	@csrf
-                	@method ('delete')
+					@csrf
+					@method ('delete')
 					<button style="background:transparent;border:none">
 						<li class="list-inline-item">
 							<a data-toggle="tooltip" data-placement="top" title="Delete" class="delete" href="{{route('libros.destroy', $libro)}}">
