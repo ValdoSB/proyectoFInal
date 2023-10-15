@@ -34,7 +34,12 @@ class ClientesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-
+            'clientName' => ['regex:/^[\pL\s\-]+$/u', 'min:8'],
+            'clientCURP' => ['alpha_num:ascii','min:18'],
+            'clientAge' => 'integer|between:1,100',
+            'clientAddress' => ['regex:/^[a-zA-Z0-9\s]+$/'],
+            'clientPostalCode' => 'numeric',
+            'clientPhone' => ['numeric','min_digits:7'],
         ]);
         $cliente = new Clientes();
         $cliente->clientCURP = $request->clientCURP;
@@ -70,8 +75,14 @@ class ClientesController extends Controller
     public function update(Request $request, Clientes $cliente)
     {
         $request->validate([
+            'clientName' => ['regex:/^[\pL\s\-]+$/u'],
+            'clientCURP' => ['alpha_num:ascii'],
+            'clientAge' => 'integer|between:1,100',
+            'clientAddress' => ['regex:/^[a-zA-Z0-9\s]+$/'],
+            'clientPostalCode' => 'numeric',
+            'clientPhone' => 'numeric',
+        ], ['clientName.regex' => 'Nombre no jala']);
 
-        ]);
         $cliente->clientCURP = $request->clientCURP;
         $cliente->clientName = $request->clientName;
         $cliente->clientAge = $request->clientAge;
