@@ -22,7 +22,7 @@ un error.
  ------------------------------ GIT COMMIT/PUSH --------------------------------------------
 git add .
 
-git commit -m "CRUD clientes terminado"
+git commit -m "Notas actualizado: Seeders, Factories y Massive Assignment"
 
 git remote add origin https://github.com/ValdoSB/proyectoFinal.git
 
@@ -215,3 +215,81 @@ git clone -b Clientes --single-branch https://github.com/ValdoSB/proyectoFinal.g
 
 php artisan make:model Clientes -mcr
 --------------------------------------------
+
+---------------------------------------17/10/23---------------------------------------------------------------------------------------------------------------
+ Desde el index de controlador "requerimiento" retorna la vista de requerimientos + un compaq().
+$req = $requerimientos::all()
+
+Para mostrarlos en el index de rquerimientos
+@foreach
+	{{$req->norma->nombre}}
+	{{$req->norma->identificador}}
+	{{$req->nombre}}
+@endforeach
+
+
+---------------------------------- Factories y Seeders---------------------------------------------------
+Seeders para rellenar datnos necesariios dentro de las tablas que sabemos que no cambiaran
+Y los factory es la definicion de datos que necesitaremos para las tablas
+
+php artsian make:factory -m Norma NormaFactory (-m "NOMBRE_MODELO" "NOMBRE_FACTORY")
+
+FakerPHP util para generar bases de datos o formularios
+	'nombre'=> $faker->sentences();
+
+php artisan make:seeder NormaSeeder
+
+Desde el NormaSeeder code
+	en la funcion public run()
+{
+	Norma::factory()->count(20)->create();	
+}
+
+Añadir el use arriba/importar el modelo al Seeder.
+
+En consola 
+	php artisan db:seed --NormaSeeder "--NombreSeeder"
+----> Inserta registros dentro de la base de datos para poblarlas y ver 
+
+En la misma carpeta de seeder existe "DataBaseSeeder" para ver ejemplos 
+	$this->call(){
+		NormaSeeder::class,
+		Seeder2::class,
+	}
+	[Esto ejectura todos los seeder dentro del arreglo
+
+---------------------------------------------
+	
+	php artisan db:seed
+
+---------------------------------------------
+Generara todos los seeders dentro de DataBaseSeeder en el call().
+
+php arisan migrate:refresh --seed, hace las migraciones y rellena nuevamente los seeders desde DataBaseSeeder
+
+-----------------------------------------------------------------------------------------------------------------
+
+EN el controlador Norma::create([
+	$request->all();
+])
+Tendra que tener los campos de los forms igual a el de las columnas de la DB con el mismo nombre.
+La asignacion masiva tendremos que permiitirla unicamente en aquellas que queramos que el usuario pueda insertar nuevos campos
+ 
+Para permitir la asignacion masiva:
+
+class User extends Eloquent {
+ 
+    protected $fillable = array('first_name', 'last_name', 'email');
+ 
+	////////// OOOOOOOOOOO
+    protected $guarded = [TODAS LAS COLUMNAS QUE NO QUIERO PERMITIR]
+}
+
+EN el caso del edit
+
+Norma::update($request->all())
+
+Norma::where('id', $norma->id)update(){
+}
+$request->except('token','_method'); para evitar errores en los que no puede retornar all(); mejor evitar con el except()
+
