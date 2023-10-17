@@ -24,11 +24,11 @@
 					</a>
 				</li>
 				<form action="{{route('libros.destroy', $libro)}}" method="post">
-					@csrf
-					@method ('delete')
-					<button style="background:transparent;border:none">
+					<button style="background:transparent;border:none;outline:none">
+						@csrf
+						@method ('delete')
 						<li class="list-inline-item">
-							<a data-toggle="tooltip" data-placement="top" title="Delete" class="delete" href="{{route('libros.destroy', $libro)}}">
+							<a data-toggle="tooltip" data-placement="top" title="Delete" class="delete">
 								<i class="fa fa-trash"></i>
 							</a>
 						</li>

@@ -220,5 +220,10 @@ return [
         'updated_at'               => 'actualizado el',
         'username'                 => 'usuario',
         'year'                     => 'año',
+        'bookISBNCreateForm'       => 'ISBN',
+        'bookNameCreateForm'       => 'nombre',
+        'authorNameCreateForm'     => 'autor',
+        'editorialNameCreateForm'  => 'editorial',
+        'booksQuantityCreateForm'  => 'cantidad',
     ],
 ];
