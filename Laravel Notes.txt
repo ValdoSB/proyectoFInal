@@ -22,7 +22,7 @@ un error.
  ------------------------------ GIT COMMIT/PUSH --------------------------------------------
 git add .
 
-git commit -m "Notas actualizado: Seeders, Factories y Massive Assignment"
+git commit -m "Notas actualizado: Middleware y principios login"
 
 git remote add origin https://github.com/ValdoSB/proyectoFinal.git
 
@@ -293,3 +293,31 @@ Norma::where('id', $norma->id)update(){
 }
 $request->except('token','_method'); para evitar errores en los que no puede retornar all(); mejor evitar con el except()
 
+--------------------------------------------------------------19/10/23-----------------------------------------------------------------
+------------Middlewares---------------------
+
+Los middleware sirven para aplicar pequeñas "secciones" de seguridad utiles para el proyecto o el uso de la pagina
+
+usar el 'auth' para aplicar el registro
+
+en web.php 
+
+Route::resource('clientes', ClientesController::class)->middleware(auth); -----> MIDDLEWARE APLICADO
+Esto aplicara el middleware a nuestras rutas, haciendo que necesite estarse autorizado para ingresar 
+
+O para agrupar
+
+Route::middleware('auth')->group(function()){
+	Route::resource('clientes', ClientesController::class);	
+	Route::resource('libros', ClientesController::class);
+}
+
+
+O meterlo dentro del constructor del controlador del modelo en su apartado construct()
+	$this->middleware('auth')->except('index','show');
+
+Se hara uso del dashboard de JetStream para el logout
+
+Copiar y pegar el <a></a> del logout del dashboard
+
+Se puede pasar como dato el user() para posteriormente acceder a la informacion del usuario a partir del auth

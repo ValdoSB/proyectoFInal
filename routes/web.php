@@ -26,6 +26,7 @@ Route::get('/', function () {
 //Route::get('/libros/pdf', [LibrosController::class, ''])->name('libros.pdf');
 Route::resource('libros', LibrosController::class);
 Route::resource('clientes', ClientesController::class);
+//Route::resource('clientes', ClientesController::class)->middleware(auth); -----> MIDDLEWARE APLICADO
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

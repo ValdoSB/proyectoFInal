@@ -10,7 +10,16 @@ class ClientesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    
+    
+     /*
+     public function __construct() {
+        $this->middleware('auth')->except('index','show');
+    }
+    */
+
+
+     public function index()
     {
         $clientes = Clientes::all();
         //dd($usuarios);
