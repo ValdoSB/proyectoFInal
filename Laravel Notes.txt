@@ -22,7 +22,7 @@ un error.
  ------------------------------ GIT COMMIT/PUSH --------------------------------------------
 git add .
 
-git commit -m "Notas actualizado: Middleware y principios login"
+git commit -m "Notas actualizado: Mantener datos de usuario en sesion y relacion M:N"
 
 git remote add origin https://github.com/ValdoSB/proyectoFinal.git
 
@@ -321,3 +321,45 @@ Se hara uso del dashboard de JetStream para el logout
 Copiar y pegar el <a></a> del logout del dashboard
 
 Se puede pasar como dato el user() para posteriormente acceder a la informacion del usuario a partir del auth
+---------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------24/10/23-----------------------------------------------------------------
+
+--------------------------------- Mantener en sesion datos de un usuario --------------------------------- 
+
+php artisan make:migration --table normas add_user_id_to_normas_table
+
+Esto nos creara en el schema las adiciones relacionadas a esto
+Dentro del schema en la funcion UP tendremos que definir las llaves foraneas a el user id,
+	$table->foreignId('user_id')->after('id');
+ a su vez dentro de la funcion de down, es necesario 
+añadir $table->dropCloumn('user_id') para que nos permita realizar el rollback en la consola con las migraciones
+
+Dentro del controller principal de modelo, se pueden añadir versiones acortadas para hacer el request o set de todos los atributos
+$request->user_id(['user_id'->auth('user_id')])
+Esto lo tendremos que validar o "asegurar" con el middleware para evitar que sea visible o accesible desdde la inspeccion de elementos, volverlo un campo oculto
+En caso del error de que nos muestre que no esta asignado un valor por default para la columna, tendremos que añadirlo a la lista del fillable,
+Puede ser util para ver los cambios realizados por el usuario con el id correspondiente o en su caso usarla para hacer busquedas de entradas que coincidan con el 'user_id'
+
+Al querer hacer uso de los seeders o factory si no definimos un usuario por default, este nos fallara al intentar realizar la poblacion.
+Para esto dentro de NormaFactory, en el cual meter:
+	user_id=> User::factory();
+	Esto creara un usuario por cada 
+En caso de duda checar documentacion de laravel->factories, y ver factories relationships
+
+
+---------------------------------------------------------------------------------------------------------- 
+--------------------------------- Relaciones Muchos a Muchos --------------------------------- 
+
+En el caso de normas se estan creando un modelo para organizaciones
+	php arthisan make:model -mcrsf organizacion
+Para nombrar las tablas es hacerlo en singular y luego por orden alfabetico
+Norma+Organizacion= norma_organizacion
+	php artisan make:migration create_norma_organizacion_table
+En la funcion up de esta migracion, tendremos que añadir los id foraneos tanto de Norma como de Organizacion
+	$table->foreignId('norma_id')->constrained();
+	$table->foreignId('organizacion_id')->constrained()->onDelete('cascade');
+
+para señalar que una norma pertenece a muchas organizaciones es 
+$return->norma->belongstoMany(organizaciones);
+Mismo caso para las organizaciones
+$return->norma->belongstoMany(normas);
