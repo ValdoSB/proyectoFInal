@@ -22,7 +22,7 @@ un error.
  ------------------------------ GIT COMMIT/PUSH --------------------------------------------
 git add .
 
-git commit -m "Notas actualizado: Mantener datos de usuario en sesion y relacion M:N"
+git commit -m "Notas actualizado: Insercion de datos relacion Muchos a Muchos y uso de los datos para select y creacion de datos"
 
 git remote add origin https://github.com/ValdoSB/proyectoFinal.git
 
@@ -363,3 +363,41 @@ para señalar que una norma pertenece a muchas organizaciones es
 $return->norma->belongstoMany(organizaciones);
 Mismo caso para las organizaciones
 $return->norma->belongstoMany(normas);
+---------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------26/10/23-----------------------------------------------------------------
+
+-------------------------------- Insercion de datos en tablas de muchos a muchos -------------------------------- 
+
+En el controller de organizaciones añadiremos el recorrido o seleccion de todos los id de organizaciones registrados
+
+En la vista norma create dentro del controlador norma tendremos que pasarle $orgs =>Organizacion::all()
+<select $orgs=>'organizacion_id' multiple>
+	@foreach ($orgs as $org)
+		option value = "{{org->id}}"
+	@endforeach
+</select>
+
+php artisan tinker es una consola interactiva 
+
+
+En caso de haber instalado el jetstream con la version para equipos, mostrara un error debido a que los usuarios registrados con el seeder no se especifica
+el rol o equipo al que pertenece el usuario generado
+
+Investigar maneras de implementar los selects multiples utilizando javascript plugins
+
+
+Utilizar el attach para insertar el arreglo de las id de organizaciones seleccionadas para la creacion de una nueva norma al insertarlas en la base de datos con las relaciones
+
+
+Para mostrarlas desde el show, podremos utilizar:
+@foreach($norma->organizaciones as $org)
+	<li>$org->nombre</li> 
+@endofreach
+
+
+Utilizar el select de manera que al ir a una vista el cliente logueado pueda ir a seleccionar los libros que desea solicitar, en un formulario 
+
+-------------> Consultar Eloquent and Relationships
+
+Se puede usar el dettach para vaciar el carrito o lista de libros prestados 
+
