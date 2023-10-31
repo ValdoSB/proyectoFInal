@@ -401,3 +401,44 @@ Utilizar el select de manera que al ir a una vista el cliente logueado pueda ir 
 
 Se puede usar el dettach para vaciar el carrito o lista de libros prestados 
 
+---------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------31/10/23-----------------------------------------------------------------
+
+-----> Middles, Gates y Polices
+Su uso es el de delimitar de mejor forma que personas tienen acceso a ciertas operaciones.
+Para hacer es gate nos vamos a AuthServiceProvider.php
+y dentro de la funcion boot() añadimos
+
+	Gate::define('admin->norma',function(User $user, Norma $norma)){
+	return->$user->id= = = $norma->user_id);
+	//return->$user->id= = = $norma->user_id || $user->admin==1);	
+}
+
+Para el proyecto final es necesario hacer solo un caso de uso (Un gate o un policy)
+En el caso de las Policy es necesario crearlas como una clase desde artisan, 
+	php artisan make:policy --model=Norma normaPolicy/nombrePolicy
+
+Donde al no añadir el -r, no nos generara el modelo con los metodos que tendria nuestro modelo inicial
+
+En el mismo AuthServiceProvider.php es necesario buscar la funcion de Policies comentado y registrar los modelos que deseamos utilizar para que los reconozca
+con la class y que policy aplicara a esta
+Utilizar los Gates y la funcion 
+	@can('nombregate', $norma)
+		Codigo a mostrar en caso de pasar la condicion 
+	@endcan
+Util para mostrar cosas unicamente si se pasa el gate
+Ejemplo-> los deletes con gates y los edits con una policy
+
+
+----------->Soft Deletes
+En create normas table añadir la linea
+	$table->softDeletes();
+Añadiendo la columna en la base de datos, pero en el modelo de dicha tabla tendremos que añadir el use Illuminate\etcetcet\softDeletes;
+
+Puede ser util para cancelar orden de compra y posteriormente volverla a restaurar (carrito libros)
+
+Con la funcion de Soft Delete OnlyTrashed() mostrara unicamente los que tengan la etiqueta de que fueron borrados
+
+Buscar e instalar en el proyecto, tiene las instrucciones de instalacion en el readme de github "laravel debug bar"
+
+---------------------------------------------------------------------------------------------------------------------------------------
