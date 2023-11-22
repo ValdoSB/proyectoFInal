@@ -22,7 +22,7 @@ un error.
  ------------------------------ GIT COMMIT/PUSH --------------------------------------------
 git add .
 
-git commit -m "CRUD clientes terminado"
+git commit -m "Notas actualizado: Insercion de datos relacion Muchos a Muchos y uso de los datos para select y creacion de datos"
 
 git remote add origin https://github.com/ValdoSB/proyectoFinal.git
 
@@ -215,3 +215,232 @@ git clone -b Clientes --single-branch https://github.com/ValdoSB/proyectoFinal.g
 
 php artisan make:model Clientes -mcr
 --------------------------------------------
+
+---------------------------------------17/10/23---------------------------------------------------------------------------------------------------------------
+ Desde el index de controlador "requerimiento" retorna la vista de requerimientos + un compaq().
+$req = $requerimientos::all()
+
+Para mostrarlos en el index de rquerimientos
+@foreach
+	{{$req->norma->nombre}}
+	{{$req->norma->identificador}}
+	{{$req->nombre}}
+@endforeach
+
+
+---------------------------------- Factories y Seeders---------------------------------------------------
+Seeders para rellenar datnos necesariios dentro de las tablas que sabemos que no cambiaran
+Y los factory es la definicion de datos que necesitaremos para las tablas
+
+php artsian make:factory -m Norma NormaFactory (-m "NOMBRE_MODELO" "NOMBRE_FACTORY")
+
+FakerPHP util para generar bases de datos o formularios
+	'nombre'=> $faker->sentences();
+
+php artisan make:seeder NormaSeeder
+
+Desde el NormaSeeder code
+	en la funcion public run()
+{
+	Norma::factory()->count(20)->create();	
+}
+
+Añadir el use arriba/importar el modelo al Seeder.
+
+En consola 
+	php artisan db:seed --NormaSeeder "--NombreSeeder"
+----> Inserta registros dentro de la base de datos para poblarlas y ver 
+
+En la misma carpeta de seeder existe "DataBaseSeeder" para ver ejemplos 
+	$this->call(){
+		NormaSeeder::class,
+		Seeder2::class,
+	}
+	[Esto ejectura todos los seeder dentro del arreglo
+
+---------------------------------------------
+	
+	php artisan db:seed
+
+---------------------------------------------
+Generara todos los seeders dentro de DataBaseSeeder en el call().
+
+php arisan migrate:refresh --seed, hace las migraciones y rellena nuevamente los seeders desde DataBaseSeeder
+
+-----------------------------------------------------------------------------------------------------------------
+
+EN el controlador Norma::create([
+	$request->all();
+])
+Tendra que tener los campos de los forms igual a el de las columnas de la DB con el mismo nombre.
+La asignacion masiva tendremos que permiitirla unicamente en aquellas que queramos que el usuario pueda insertar nuevos campos
+ 
+Para permitir la asignacion masiva:
+
+class User extends Eloquent {
+ 
+    protected $fillable = array('first_name', 'last_name', 'email');
+ 
+	////////// OOOOOOOOOOO
+    protected $guarded = [TODAS LAS COLUMNAS QUE NO QUIERO PERMITIR]
+}
+
+EN el caso del edit
+
+Norma::update($request->all())
+
+Norma::where('id', $norma->id)update(){
+}
+$request->except('token','_method'); para evitar errores en los que no puede retornar all(); mejor evitar con el except()
+
+--------------------------------------------------------------19/10/23-----------------------------------------------------------------
+------------Middlewares---------------------
+
+Los middleware sirven para aplicar pequeñas "secciones" de seguridad utiles para el proyecto o el uso de la pagina
+
+usar el 'auth' para aplicar el registro
+
+en web.php 
+
+Route::resource('clientes', ClientesController::class)->middleware(auth); -----> MIDDLEWARE APLICADO
+Esto aplicara el middleware a nuestras rutas, haciendo que necesite estarse autorizado para ingresar 
+
+O para agrupar
+
+Route::middleware('auth')->group(function()){
+	Route::resource('clientes', ClientesController::class);	
+	Route::resource('libros', ClientesController::class);
+}
+
+
+O meterlo dentro del constructor del controlador del modelo en su apartado construct()
+	$this->middleware('auth')->except('index','show');
+
+Se hara uso del dashboard de JetStream para el logout
+
+Copiar y pegar el <a></a> del logout del dashboard
+
+Se puede pasar como dato el user() para posteriormente acceder a la informacion del usuario a partir del auth
+---------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------24/10/23-----------------------------------------------------------------
+
+--------------------------------- Mantener en sesion datos de un usuario --------------------------------- 
+
+php artisan make:migration --table normas add_user_id_to_normas_table
+
+Esto nos creara en el schema las adiciones relacionadas a esto
+Dentro del schema en la funcion UP tendremos que definir las llaves foraneas a el user id,
+	$table->foreignId('user_id')->after('id');
+ a su vez dentro de la funcion de down, es necesario 
+añadir $table->dropCloumn('user_id') para que nos permita realizar el rollback en la consola con las migraciones
+
+Dentro del controller principal de modelo, se pueden añadir versiones acortadas para hacer el request o set de todos los atributos
+$request->user_id(['user_id'->auth('user_id')])
+Esto lo tendremos que validar o "asegurar" con el middleware para evitar que sea visible o accesible desdde la inspeccion de elementos, volverlo un campo oculto
+En caso del error de que nos muestre que no esta asignado un valor por default para la columna, tendremos que añadirlo a la lista del fillable,
+Puede ser util para ver los cambios realizados por el usuario con el id correspondiente o en su caso usarla para hacer busquedas de entradas que coincidan con el 'user_id'
+
+Al querer hacer uso de los seeders o factory si no definimos un usuario por default, este nos fallara al intentar realizar la poblacion.
+Para esto dentro de NormaFactory, en el cual meter:
+	user_id=> User::factory();
+	Esto creara un usuario por cada 
+En caso de duda checar documentacion de laravel->factories, y ver factories relationships
+
+
+---------------------------------------------------------------------------------------------------------- 
+--------------------------------- Relaciones Muchos a Muchos --------------------------------- 
+
+En el caso de normas se estan creando un modelo para organizaciones
+	php arthisan make:model -mcrsf organizacion
+Para nombrar las tablas es hacerlo en singular y luego por orden alfabetico
+Norma+Organizacion= norma_organizacion
+	php artisan make:migration create_norma_organizacion_table
+En la funcion up de esta migracion, tendremos que añadir los id foraneos tanto de Norma como de Organizacion
+	$table->foreignId('norma_id')->constrained();
+	$table->foreignId('organizacion_id')->constrained()->onDelete('cascade');
+
+para señalar que una norma pertenece a muchas organizaciones es 
+$return->norma->belongstoMany(organizaciones);
+Mismo caso para las organizaciones
+$return->norma->belongstoMany(normas);
+---------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------26/10/23-----------------------------------------------------------------
+
+-------------------------------- Insercion de datos en tablas de muchos a muchos -------------------------------- 
+
+En el controller de organizaciones añadiremos el recorrido o seleccion de todos los id de organizaciones registrados
+
+En la vista norma create dentro del controlador norma tendremos que pasarle $orgs =>Organizacion::all()
+<select $orgs=>'organizacion_id' multiple>
+	@foreach ($orgs as $org)
+		option value = "{{org->id}}"
+	@endforeach
+</select>
+
+php artisan tinker es una consola interactiva 
+
+
+En caso de haber instalado el jetstream con la version para equipos, mostrara un error debido a que los usuarios registrados con el seeder no se especifica
+el rol o equipo al que pertenece el usuario generado
+
+Investigar maneras de implementar los selects multiples utilizando javascript plugins
+
+
+Utilizar el attach para insertar el arreglo de las id de organizaciones seleccionadas para la creacion de una nueva norma al insertarlas en la base de datos con las relaciones
+
+
+Para mostrarlas desde el show, podremos utilizar:
+@foreach($norma->organizaciones as $org)
+	<li>$org->nombre</li> 
+@endofreach
+
+
+Utilizar el select de manera que al ir a una vista el cliente logueado pueda ir a seleccionar los libros que desea solicitar, en un formulario 
+
+-------------> Consultar Eloquent and Relationships
+
+Se puede usar el dettach para vaciar el carrito o lista de libros prestados 
+
+---------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------31/10/23-----------------------------------------------------------------
+
+-----> Middles, Gates y Polices
+Su uso es el de delimitar de mejor forma que personas tienen acceso a ciertas operaciones.
+Para hacer es gate nos vamos a AuthServiceProvider.php
+y dentro de la funcion boot() añadimos
+
+	Gate::define('admin->norma',function(User $user, Norma $norma)){
+	return->$user->id= = = $norma->user_id);
+	//return->$user->id= = = $norma->user_id || $user->admin==1);	
+}
+
+Para el proyecto final es necesario hacer solo un caso de uso (Un gate o un policy)
+En el caso de las Policy es necesario crearlas como una clase desde artisan, 
+	php artisan make:policy --model=Norma normaPolicy/nombrePolicy
+
+Donde al no añadir el -r, no nos generara el modelo con los metodos que tendria nuestro modelo inicial
+
+En el mismo AuthServiceProvider.php es necesario buscar la funcion de Policies comentado y registrar los modelos que deseamos utilizar para que los reconozca
+con la class y que policy aplicara a esta
+Utilizar los Gates y la funcion 
+	@can('nombregate', $norma)
+		Codigo a mostrar en caso de pasar la condicion 
+	@endcan
+Util para mostrar cosas unicamente si se pasa el gate
+Ejemplo-> los deletes con gates y los edits con una policy
+
+
+----------->Soft Deletes
+En create normas table añadir la linea
+	$table->softDeletes();
+Añadiendo la columna en la base de datos, pero en el modelo de dicha tabla tendremos que añadir el use Illuminate\etcetcet\softDeletes;
+
+Puede ser util para cancelar orden de compra y posteriormente volverla a restaurar (carrito libros)
+
+Con la funcion de Soft Delete OnlyTrashed() mostrara unicamente los que tengan la etiqueta de que fueron borrados
+
+Buscar e instalar en el proyecto, tiene las instrucciones de instalacion en el readme de github "laravel debug bar"
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Antes del rename de clientes:
+2023_10_12_020742_
