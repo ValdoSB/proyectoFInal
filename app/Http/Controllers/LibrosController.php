@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clientes;
 use App\Models\Libros;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,8 @@ class LibrosController extends Controller
      */
     public function create()
     {
+        //$clientes = Clientes::all();  Manejar clientes
+        //return view('libros/createLibro', compact('clientes'));
         return view('libros/createLibro');
     }
 

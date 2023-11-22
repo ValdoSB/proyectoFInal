@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-mark class="block h-9 w-auto" />
+                        <img src="{{asset('template/images/logo2.png')}}" alt="" />
                     </a>
                 </div>
 
@@ -15,6 +15,13 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link href="{{route('clientes.index')}}" >
+                        Clientes
+                    </x-nav-link>
+                    <x-nav-link href="{{route('libros.index')}}">
+                        Libros
+                    </x-nav-link>
+                    
                 </div>
             </div>
 
@@ -22,7 +29,7 @@
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="ml-3 relative">
-                        <x-dropdown align="right" width="60">
+                        <x-dropdown align="right" width="10">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
                                     <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
@@ -101,7 +108,12 @@
                             <x-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
-
+                            <x-dropdown-link href="{{route('clientes.index')}}">
+                                Clientes
+                            </x-dropdown-link>
+                            <x-dropdown-link href="{{route('libros.index')}}">
+                                Libros
+                            </x-dropdown-link>
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-dropdown-link href="{{ route('api-tokens.index') }}">
                                     {{ __('API Tokens') }}
@@ -141,6 +153,12 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{route('clientes.index')}}" :active="request()->routeIs('dashboard')">
+                Clientes
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{route('libros.index')}}" :active="request()->routeIs('dashboard')">
+                Libros
             </x-responsive-nav-link>
         </div>
 

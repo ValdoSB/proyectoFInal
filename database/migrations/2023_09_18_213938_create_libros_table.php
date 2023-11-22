@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('libros', function (Blueprint $table) {
             $table->id();
+            //$table->foreignId('cliente_id')->constrained();  LLAVE FORANEA A CLIENTES
             $table->bigInteger('ISBN');
             $table->string('nombre');
             $table->string('autor');
             $table->string('editorial');
             $table->integer('cantidad');
+            
             $table->timestamps();
+            
+            
         });
     }
 
