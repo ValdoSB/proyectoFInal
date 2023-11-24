@@ -26,7 +26,8 @@ Route::get('/', function () {
 //Route::get('/libros/pdf', [LibrosController::class, ''])->name('libros.pdf');
 Route::resource('libros', LibrosController::class);
 Route::resource('clientes', ClientesController::class);
-Route::middleware([
+Route::middleware
+([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
@@ -35,3 +36,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+Route::get('/clientes/create', [ClientesController::class, 'create'])
+    ->middleware('password.confirm')
+    ->name('clientes.create');
