@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Clientes;
 use App\Models\Libros;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClientesController extends Controller
@@ -11,25 +12,21 @@ class ClientesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    //$clientes = Clientes::all();
+    
+    public function index()
+    {
+        $user = auth()->user();
+        if ($user) {
+            $clientes = $user->clientes;
+        } else {
+            $clientes = collect();
+        }
+        //$clientes = Clientes::all();
         //dd($usuarios);
         //Usuario::where('nombre','Sebastian')->get
         //Usuario::where('nombre','like',$request->consulta)->get
-    public function index()
-{
-    $user = auth()->user();
-
-    // Verifica si hay un usuario autenticado
-    if ($user) {
-        // Si hay un usuario, obtén los clientes asociados
-        $clientes = $user->clientes;
-    } else {
-        // Si no hay un usuario, inicializa la variable $clientes como una colección vacía
-        $clientes = collect();
+        return view('clientes.cliente-index', compact('clientes'));
     }
-
-    return view('clientes.cliente-index', compact('clientes'));
-}
 
     /**
      * Show the form for creating a new resource.
@@ -82,6 +79,7 @@ class ClientesController extends Controller
      */
     public function edit($cliente_id)
     {
+        //Eager Loading
         $cliente = Clientes::with('libros')->find($cliente_id);
         $libs = Libros::all();
         return view('clientes/editCliente', compact('cliente','libs'));

@@ -23,8 +23,6 @@ class LibrosController extends Controller
      */
     public function create()
     {
-        //$clientes = Clientes::all();  Manejar clientes
-        //return view('libros/createLibro', compact('clientes'));
         return view('libros/createLibro');
     }
 
