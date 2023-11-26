@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('clientAddress');
             $table->string('clientPostalCode');
             $table->string('clientPhone');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

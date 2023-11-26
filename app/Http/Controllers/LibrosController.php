@@ -40,7 +40,7 @@ class LibrosController extends Controller
             'editorialNameCreateForm' => ['regex:/^[A-Za-z0-9 .-]+$/i', 'min:3'],
             'booksQuantityCreateForm' => ['numeric','min_digits:1', 'max_digits:4'],
         ]);
-
+        //$cliente = Clientes::find($clienteId);
         $libro = new Libros();
         $libro->ISBN = $request->bookISBNCreateForm;
         $libro->nombre = $request->bookNameCreateForm;
@@ -48,6 +48,7 @@ class LibrosController extends Controller
         $libro->editorial = $request->editorialNameCreateForm;
         $libro->cantidad = $request->booksQuantityCreateForm;
         $libro->save();
+        //$cliente->libros()->attach($libro->id);
 
         return redirect()->route('libros.index');
     }

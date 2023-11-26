@@ -94,12 +94,22 @@
                             name="clientPhone"
                             value="{{ old('clientPhone')}}"  
                             required>
-                    </div>
+                    
                     @error('clientPhone')
                         <div class="alert alert-danger">{{ $message }}</div>
-                     @enderror
+                    @enderror
                 </div>
+                
             </div>
+            <div >
+                    <select name="libro_id[]" multiple>
+                        @foreach ($libs as $lib)
+                            <option value="{{ $lib->id }}" @selected( array_search($lib->id, old('libro_id') ?? []) !== false )>
+                                {{ $lib->nombre }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             <div class="btn-grounp">
                 <button type="submit" class="btn btn-primary mt-2">Registrar</button>
             </div>

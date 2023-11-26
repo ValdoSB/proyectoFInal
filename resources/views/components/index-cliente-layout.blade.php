@@ -84,15 +84,15 @@
                   <li class="nav-item">
                     <a class="btn btn-outline-success my-2 my-sm-0" style="border:none" style="background-color: transparent" href="login">Iniciar Sesion</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="btn btn-outline-info my-2 my-sm-0" style="border:none" style="background-color: transparent" href="register">Registrarse</a>
+                  </li>
                   @endguest
                   @auth 
                   <li class="nav-item">
                   <a class="btn btn-outline-success my-2 my-sm-0" style="border:none" style="background-color: transparent" href="{{route('clientes.create')}}">
                     <i class="fa fa-plus-circle"></i> Registrar Cliente</a>
 								  </li>
-                  @endauth
-                  
-                @auth
                 <li>
                   <div class="dropdown">
                       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"

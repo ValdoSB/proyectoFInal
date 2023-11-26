@@ -32,7 +32,7 @@
   <link href="{{asset('template/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
   <link href="{{asset('template/plugins/slick/slick.css')}}" rel="stylesheet">
   <link href="{{asset('template/plugins/slick/slick-theme.css')}}" rel="stylesheet">
-  <link href="{{asset('template/plugins/jquery-nice-select/css/nice-select.css')}}" rel="stylesheet">
+  <!--<link href="{{asset('template/plugins/jquery-nice-select/css/nice-select.css')}}" rel="stylesheet">-->
   
   <link href="{{asset('template/css/style.css')}}" rel="stylesheet">
 
@@ -150,7 +150,7 @@ Essential Scripts
 <script src="{{asset('template/plugins/tether/js/tether.min.js')}}"></script>
 <script src="{{asset('template/plugins/raty/jquery.raty-fa.js')}}"></script>
 <script src="{{asset('template/plugins/slick/slick.min.js')}}"></script>
-<script src="{{asset('template/plugins/jquery-nice-select/js/jquery.nice-select.min.js')}}"></script>
+<!--<script src="{{asset('template/plugins/jquery-nice-select/js/jquery.nice-select.min.js')}}"></script>-->
 <!-- google map -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU" defer></script>
 <script src="{{asset('template/plugins/google-map/map.js')}}" defer></script>

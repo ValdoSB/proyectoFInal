@@ -48,5 +48,6 @@
         </div>
     </div>   
     @endforeach
+    
 </x-index-cliente-layout>
 

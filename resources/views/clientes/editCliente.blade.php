@@ -100,6 +100,15 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                      @enderror
                 </div>
+                <div>
+                <select name="libro_id[]" multiple>
+                    @foreach ($libs as $lib)
+                        <option value="{{ $lib->id }}" {{ $cliente->libros->contains('id', $lib->id) ? 'selected' : '' }}>
+                            {{ $lib->nombre }}
+                        </option>
+                    @endforeach
+                </select>
+                </div>
             </div>
             <div class="btn-grounp">
                 <button type="submit" class="btn btn-primary mt-2">Modificar</button>

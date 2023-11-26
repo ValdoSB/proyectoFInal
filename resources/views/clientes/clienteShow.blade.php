@@ -41,6 +41,14 @@
 								<td>Télefono</td>
 								<td>{{$cliente->clientPhone}}</td>
 							</tr>
+							<tr>
+								<td>Libros de Prestamo</td>
+								<td>
+									@foreach($cliente->libros as $libro)
+										<li>{{ $libro->nombre }}</li>
+									@endforeach
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>

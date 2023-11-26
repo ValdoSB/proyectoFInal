@@ -9,8 +9,8 @@ class Libros extends Model
 {
     use HasFactory;
     //public $timestamps = false;
-    /*public function cliente()
+    public function clientes()
     {
-        return $this->belongsTo(Clientes::class);
-    } Relacion clientes ->libros*/
+        return $this->belongsToMany(Clientes::class, 'clientes_libros', 'libro_id', 'cliente_id');
+    }
 }

@@ -47,7 +47,7 @@
         <div class="row">
           <div class="col-md-12">
             <nav class="navbar navbar-expand-lg navbar-light navigation">
-            <a class="navbar-brand" href="{{ route('clientes.index')}}">
+              <a class="navbar-brand" href="">
               <img src="{{asset('template/images/logo2.png')}}" alt="" />
               </a>
               <button
@@ -69,21 +69,60 @@
                   <li class="nav-item active">
                     <a class="nav-link" href="{{route('libros.index')}}">Libros</a>
                   </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">Panel</a>
+                  </li>
                 </ul>
                 <ul class="navbar-nav ml-auto mt-10">
+                  @guest
                   <li class="nav-item">
-                    <a class="nav-link login-button" href="login">Iniciar Sesion</a>
+                    <a class="btn btn-outline-success my-2 my-sm-0" style="border:none" style="background-color: transparent" href="login">Iniciar Sesion</a>
                   </li>
+                  @endguest
+                  @auth 
                   <li class="nav-item">
-									  <a class="nav-link text-white add-button" href="{{route('clientes.create')}}">
+                  <a class="btn btn-outline-success my-2 my-sm-0" style="border:none" style="background-color: transparent" href="{{route('clientes.create')}}">
                     <i class="fa fa-plus-circle"></i> Registrar Cliente</a>
 								  </li>
+                  @endauth
+                  
+                @auth
+                <li>
+                  <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
+                      style="border:none" style="background-color: transparent">
+                        {{ Auth::user()->name }}
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <li class="d-sm-none"><a class="dropdown-item" href="{{ route('profile.show') }}">{{ __('Profile') }}</a></li>
+                          <li class="d-sm-none"><a class="dropdown-item" href="{{route('clientes.index')}}">Clientes</a></li>
+                          <li class="d-sm-none"><a class="dropdown-item" href="{{route('libros.index')}}">Libros</a></li>
+                          <!-- Opciones adicionales para pantallas más grandes (md, lg, xl) -->
+                          <li class="d-none d-sm-block"><a class="dropdown-item" href="{{ route('profile.show') }}">{{ __('Profile') }}</a></li>
+                          <li class="d-none d-sm-block"><a class="dropdown-item" href="{{route('clientes.index')}}">Clientes</a></li>
+                          <li class="d-none d-sm-block"><a class="dropdown-item" href="{{route('libros.index')}}">Libros</a></li>
+                      </ul>
+                  </div>
+                </li>
+                @endauth
+                @auth
+                  <li class="nav-item">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" style="border:none" style="background-color: transparent" class="btn btn-danger">
+                          Cerrar Sesión
+                        </button>
+                    </form>
+                  </li>
+                  @endauth
                 </ul>
               </div>
+              
             </nav>
           </div>
         </div>
       </div>
+      
     </header>
 
 <!--===================================
