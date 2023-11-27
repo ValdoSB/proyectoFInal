@@ -97,7 +97,7 @@ class ClientesController extends Controller
             'clientAddress' => ['regex:/^[a-zA-Z0-9\s]+$/'],
             'clientPostalCode' => 'numeric',
             'clientPhone' => 'numeric',
-        ], ['clientName.regex' => 'Nombre no jala']);
+        ]);
 
         $cliente->clientCURP = $request->clientCURP;
         $cliente->clientName = $request->clientName;
