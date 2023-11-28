@@ -78,9 +78,6 @@
                     <i class="fa fa-plus-circle"></i> Registrar Libro</a>
 								  </li>
                   <li class="nav-item">
-                  <a class="btn btn-outline-success my-2 my-sm-0" style="border:none" style="background-color: transparent" href="{{route('clientes.create')}}">
-                    <i class="fa fa-plus-circle"></i> Registrar Cliente</a>
-								  </li>
                 <li>
                   <div class="dropdown">
                       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
