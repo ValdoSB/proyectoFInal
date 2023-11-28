@@ -42,6 +42,7 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
+        $archivo = $request->file('archivo');
         $request->validate([
             'clientName' => ['regex:/^[\pL\s\-]+$/u', 'min:8'],
             'clientCURP' => ['alpha_num:ascii','min:18'],
@@ -49,6 +50,7 @@ class ClientesController extends Controller
             'clientAddress' => ['regex:/^[a-zA-Z0-9\s]+$/'],
             'clientPostalCode' => 'numeric',
             'clientPhone' => ['numeric','min_digits:7'],
+            'archivo' => 'max:10000|mimes:jpeg,png,svg', 
         ]);
         $cliente = new Clientes();
         $cliente->clientCURP = $request->clientCURP;
@@ -58,6 +60,8 @@ class ClientesController extends Controller
         $cliente->clientPostalCode = $request->clientPostalCode;
         $cliente->clientPhone = $request->clientPhone;
         $cliente->user_id = auth()->user()->id;
+        $cliente->fileName = $request->file('archivo')->getClientOriginalName();
+        $cliente->filePath = $request->file('archivo')->store('public/img');
         $cliente->save();
         $cliente->libros()->sync($request->input('libro_id', []));
         return redirect()->route('clientes.index');

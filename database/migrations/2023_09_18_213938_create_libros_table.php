@@ -19,10 +19,8 @@ return new class extends Migration
             $table->string('autor');
             $table->string('editorial');
             $table->integer('cantidad');
-            
             $table->timestamps();
-            
-            
+            $table->softDeletes();
         });
     }
 

@@ -20,7 +20,10 @@ return new class extends Migration
             $table->string('clientPostalCode');
             $table->string('clientPhone');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('fileName')->nullable();
+            $table->string('filePath')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
     /**

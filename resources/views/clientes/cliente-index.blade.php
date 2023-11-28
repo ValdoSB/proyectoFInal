@@ -4,9 +4,15 @@
         <div class="card">
             <div class="thumb-content">
                 <!-- <div class="price">$200</div> -->
-                <a href="{{route('clientes.show', $cliente)}}">
-                <img class="card-img-top img-fluid" src="template/img/user.jpg" alt="Card image cap">
-                </a>
+                @if($cliente->filePath!=null)
+                    <a href="{{route('clientes.show', $cliente)}}">
+                    <img class="card-img-top img-fluid" src="{{ \Storage::url($cliente->filePath) }}" alt="Card image cap">
+                    </a>
+                @else
+                    <a href="{{route('clientes.show', $cliente)}}">
+                    <img class="card-img-top img-fluid" src="template/img/user.jpg" alt="Card image cap">
+                    </a>
+                @endif
             </div>
             <div class="card-body">
                 <h4 class="card-title"><a href="{{route('clientes.show', $cliente)}}" > {{ $cliente->clientName }}</a></h4>

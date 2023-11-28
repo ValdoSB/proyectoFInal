@@ -31,7 +31,8 @@ class ClientesFactory extends Factory
             'user_id' => function () {
                 return User::factory()->create()->id;
             },
-            
+            'fileName' => null,
+            'filePath' => null,
         ];
     }
 }

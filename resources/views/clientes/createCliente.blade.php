@@ -1,5 +1,5 @@
 <x-formulario-registro-layout>
-    <form action="{{route('clientes.store')}}" method="post">
+    <form action="{{route('clientes.store')}}" method="post" encType="multipart/form-data">
         @csrf
         <fieldset class="p-4">
             <div class="form-group">
@@ -99,7 +99,12 @@
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                
+                <div class="row">
+                    <div class="col-lg-6 py-2">
+                    <label for="archivo"> Subir foto de perfil:</label>
+                        <input type="file" name="archivo">
+                    </div>
+                </div>
             </div>
             <div >
                     <select name="libro_id[]" multiple>
